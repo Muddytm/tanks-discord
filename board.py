@@ -10,8 +10,8 @@ dim_x = 14
 dim_y = 14
 
 # Template offets
-temp_off_x = 0
-temp_off_y = 0
+temp_off_x = 120
+temp_off_y = 100
 
 # No need for tile_y - all tiles are squares.
 tile_x = 160
@@ -20,9 +20,23 @@ tile_y = 160
 def create():
     """Create image of game board."""
     filename = "images/board.png"
-    img = Image.new("RGB", (dim_x * tile_x, dim_y * tile_x), color=(0, 0, 0))
+    img = Image.new("RGB", ((dim_x * tile_x) + temp_off_x,
+                            (dim_y * tile_x) + temp_off_y), color=(0, 0, 0))
     #img = Image.open("images/boardtemplate.png")
     d = ImageDraw.Draw(img)
+
+    fnt = ImageFont.truetype("C:\\Windows\\Fonts\\arial.ttf", 80)
+    for x in range(dim_x):
+        num_offset = 80
+        if x > 9:
+            num_offset = 30
+        d.text(((x * tile_x) + temp_off_x + num_offset, 20), str(x), font=fnt, fill=(244, 246, 247))
+
+    for y in range(dim_y):
+        num_offset = 70
+        if y > 9:
+            num_offset = 20
+        d.text((num_offset, (y * tile_y) + temp_off_y + 40), str(y), font=fnt, fill=(244, 246, 247))
 
     tile = Image.open("images/tiles/empty.png", "r")
     for x in range(dim_x):
@@ -55,7 +69,6 @@ def create():
         img.paste(pointbar, offset)
 
     img.save(filename)
-    print ("hello world")
 
 
 if __name__ == "__main__":
