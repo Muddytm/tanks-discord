@@ -40,7 +40,6 @@ def action(action, x, y, ctx):
                     if data["players"][player]["hp"] == 0:
                         response += "\nThey're dead!"
                     break
-
         elif check == "donated":
             data["players"][name]["points"] -= cost
             for player in data["players"]:
@@ -49,22 +48,23 @@ def action(action, x, y, ctx):
                         data["players"][player]["points"] += 1
                         response = "You donated 1 point to {}!".format(player)
                     else:
-                        response = "{} is holding the maximum amount of points (14).".format(player)
+                        return "{} is holding the maximum amount of points (14).".format(player), False
+                    break
         elif check == "blocked":
-            return "There's already a player there."
+            return "There's already a player there.", False
         elif check == "missed":
-            return "There's nobody to shoot there."
+            return "There's nobody to shoot there.", False
         elif check == "invalid":
-            return "You don't have enough points to do that (short by {}).".format(cost)
+            return "You don't have enough points to do that (short by {}).".format(cost), False
         elif check == "nopoints":
-            return "You're all out of points until next turn."
+            return "You're all out of points until next turn.", False
         elif check == "dead":
-            return "That player is dead..."
+            return "That player is dead...", False
 
         with open("data/game.json", "w") as f:
             json.dump(data, f)
 
-        return response
+        return response, True
 
 
 def valid_location(action, points, x, y, cur_x, cur_y):
@@ -95,12 +95,12 @@ def valid_location(action, points, x, y, cur_x, cur_y):
                     return "blocked", 0
                 elif action == "shoot":
                     if data["players"][player]["hp"] > 0:
-                        return "shot", (cost - 2)
+                        return "shot", (cost - 1)
                     else:
                         return "dead", 0
                 elif action == "donate":
                     if data["players"][player]["hp"] > 0:
-                        return "donated", (cost - 2)
+                        return "donated", (cost - 1)
                     else:
                         return "dead", 0
 

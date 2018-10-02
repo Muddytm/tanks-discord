@@ -110,17 +110,18 @@ async def move(ctx, x="", y=""):
     if ctx.message.channel.name != "commands":
         return
 
-    await client.send_message(ctx.message.channel,
-                              actions.action("move", x, y, ctx))
+    response, changed = actions.action("move", x, y, ctx)
+    await client.send_message(ctx.message.channel, response)
 
-    board.create()
-    for channel in ctx.message.server.channels:
-        if channel.name == "gameboard":
-            with open("images/board.png", "rb") as f:
-                messages = []
-                async for msg in client.logs_from(channel, limit=10):
-                    await client.delete_message(msg)
-                await client.send_file(channel, f)
+    if changed:
+        board.create()
+        for channel in ctx.message.server.channels:
+            if channel.name == "gameboard":
+                with open("images/board.png", "rb") as f:
+                    messages = []
+                    async for msg in client.logs_from(channel, limit=10):
+                        await client.delete_message(msg)
+                    await client.send_file(channel, f)
 
 
 @client.command(pass_context=True)
@@ -129,17 +130,18 @@ async def shoot(ctx, x="", y=""):
     if ctx.message.channel.name != "commands":
         return
 
-    await client.send_message(ctx.message.channel,
-                              actions.action("shoot", x, y, ctx))
+    response, changed = actions.action("shoot", x, y, ctx)
+    await client.send_message(ctx.message.channel, response)
 
-    board.create()
-    for channel in ctx.message.server.channels:
-        if channel.name == "gameboard":
-            with open("images/board.png", "rb") as f:
-                messages = []
-                async for msg in client.logs_from(channel, limit=10):
-                    await client.delete_message(msg)
-                await client.send_file(channel, f)
+    if changed:
+        board.create()
+        for channel in ctx.message.server.channels:
+            if channel.name == "gameboard":
+                with open("images/board.png", "rb") as f:
+                    messages = []
+                    async for msg in client.logs_from(channel, limit=10):
+                        await client.delete_message(msg)
+                    await client.send_file(channel, f)
 
 
 @client.command(pass_context=True)
@@ -148,17 +150,18 @@ async def donate(ctx, x="", y=""):
     if ctx.message.channel.name != "commands":
         return
 
-    await client.send_message(ctx.message.channel,
-                              actions.action("donate", x, y, ctx))
+    response, changed = actions.action("donate", x, y, ctx)
+    await client.send_message(ctx.message.channel, response)
 
-    board.create()
-    for channel in ctx.message.server.channels:
-        if channel.name == "gameboard":
-            with open("images/board.png", "rb") as f:
-                messages = []
-                async for msg in client.logs_from(channel, limit=10):
-                    await client.delete_message(msg)
-                await client.send_file(channel, f)
+    if changed:
+        board.create()
+        for channel in ctx.message.server.channels:
+            if channel.name == "gameboard":
+                with open("images/board.png", "rb") as f:
+                    messages = []
+                    async for msg in client.logs_from(channel, limit=10):
+                        await client.delete_message(msg)
+                    await client.send_file(channel, f)
 
 
 # @client.command(pass_context=True)

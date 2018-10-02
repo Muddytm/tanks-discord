@@ -1,1 +1,1 @@
-{"players": {"Muddy": {"x": 4, "points": 0, "y": 2, "color": {"r": 229, "b": 102, "g": 152, "name": "orange"}, "hp": 3}, "iZ": {"x": 5, "points": 2, "y": 2, "color": {"r": 232, "b": 239, "g": 218, "name": "pink"}, "hp": 3}}}
+{"players": {"iZ": {"color": {"name": "darkgreen", "r": 35, "g": 155, "b": 86}, "x": 2, "y": 2, "hp": 2, "points": 11}, "Muddy": {"color": {"name": "yellow", "r": 247, "g": 220, "b": 111}, "x": 3, "y": 2, "hp": 3, "points": 1}}}
