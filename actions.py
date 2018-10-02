@@ -79,12 +79,6 @@ def valid_location(action, points, x, y, cur_x, cur_y):
     else:
         distance = (2 + points)
 
-    #print ("distance=" + str(distance))
-    #print (x)
-    #print (y)
-    #print (cur_x)
-    #print (cur_y)
-
     cost = (abs(cur_x - x) + abs(cur_y - y))
     if action != "move" and cost < 4:
         cost = 3
@@ -113,7 +107,7 @@ def valid_location(action, points, x, y, cur_x, cur_y):
         else:
             return "missed", 0
     else:
-        return "invalid", (distance - (cost - 2))
+        return "invalid", (cost - distance)
 
 
 def get_player_info():

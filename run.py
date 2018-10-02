@@ -128,6 +128,12 @@ async def move(ctx, x="", y=""):
     if ctx.message.channel.name != "commands":
         return
 
+    with open("data/game.json") as f:
+        data = json.load(f)
+
+    suffix = ", from {} {}".format(data["players"][ctx.message.author.name]["x"],
+                                   data["players"][ctx.message.author.name]["y"])
+
     action = "{}: {} {} {}".format(ctx.message.author.name, "move", x, y)
     # action_queue.append(action)
     # print (action_queue)
@@ -151,8 +157,8 @@ async def move(ctx, x="", y=""):
 
         for channel in ctx.message.server.channels:
             if channel.name == "actionlog":
-                await client.send_message(channel, action)
-    #
+                await client.send_message(channel, action + suffix)
+
     # action_queue.pop(0)
 
 
@@ -184,7 +190,11 @@ async def shoot(ctx, x="", y=""):
 
         for channel in ctx.message.server.channels:
             if channel.name == "actionlog":
-                await client.send_message(channel, action)
+                with open("data/game.json") as f:
+                    data = json.load(f)
+                suffix = ", from {} {}".format(data["players"][ctx.message.author.name]["x"],
+                                               data["players"][ctx.message.author.name]["y"])
+                await client.send_message(channel, action + suffix)
 
         with open("data/game.json") as f:
             data = json.load(f)
@@ -225,8 +235,12 @@ async def donate(ctx, x="", y=""):
 
         for channel in ctx.message.server.channels:
             if channel.name == "actionlog":
-                await client.send_message(channel, action)
-    #
+                with open("data/game.json") as f:
+                    data = json.load(f)
+                suffix = ", from {} {}".format(data["players"][ctx.message.author.name]["x"],
+                                               data["players"][ctx.message.author.name]["y"])
+                await client.send_message(channel, action + suffix)
+
     # action_queue.pop(0)
 
 
