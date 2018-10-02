@@ -117,7 +117,8 @@ async def generategame(ctx, stuff=""):
             with open("images/board.png", "rb") as f:
                 messages = []
                 async for msg in client.logs_from(channel, limit=10):
-                    await client.delete_message(msg)
+                    messages.append(msg)
+                await client.delete_messages(messages)
                 await client.send_file(channel, f)
             await client.send_message(channel, actions.get_player_info())
 
@@ -150,7 +151,8 @@ async def move(ctx, x="", y=""):
                 with open("images/board.png", "rb") as f:
                     messages = []
                     async for msg in client.logs_from(channel, limit=10):
-                        await client.delete_message(msg)
+                        messages.append(msg)
+                    await client.delete_messages(messages)
                     await client.send_file(channel, f)
                 await client.send_message(channel, actions.get_player_info())
 
@@ -183,8 +185,10 @@ async def shoot(ctx, x="", y=""):
             if channel.name == "gameboard":
                 with open("images/board.png", "rb") as f:
                     messages = []
+                    messages = []
                     async for msg in client.logs_from(channel, limit=10):
-                        await client.delete_message(msg)
+                        messages.append(msg)
+                    await client.delete_messages(messages)
                     await client.send_file(channel, f)
                 await client.send_message(channel, actions.get_player_info())
 
@@ -229,7 +233,8 @@ async def donate(ctx, x="", y=""):
                 with open("images/board.png", "rb") as f:
                     messages = []
                     async for msg in client.logs_from(channel, limit=10):
-                        await client.delete_message(msg)
+                        messages.append(msg)
+                    await client.delete_messages(messages)
                     await client.send_file(channel, f)
                 await client.send_message(channel, actions.get_player_info())
 
@@ -362,7 +367,8 @@ async def nextturn(ctx, stuff=""):
             with open("images/board.png", "rb") as f:
                 messages = []
                 async for msg in client.logs_from(channel, limit=10):
-                    await client.delete_message(msg)
+                    messages.append(msg)
+                await client.delete_messages(messages)
                 await client.send_file(channel, f)
             await client.send_message(channel, actions.get_player_info())
 
