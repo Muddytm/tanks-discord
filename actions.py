@@ -13,7 +13,7 @@ def action(action, x, y, ctx):
         x = int(x)
         y = int(y)
     except Exception:
-        return ("Please use correct syntax, with two numbers as the parameter. Example: `!{} 6 9`".format(action))
+        return ("Please use correct syntax, with two numbers as the parameter. Example: `!{} 6 9`".format(action)), False
 
     if private:
         with open("data/game.json") as f:
@@ -38,6 +38,8 @@ def action(action, x, y, ctx):
                     data["players"][player]["hp"] -= 1
                     response = "You dealt 1 point of damage to {}!".format(player)
                     if data["players"][player]["hp"] == 0:
+                        del data["players"][player]
+                        data["jury"][player] = ""
                         response += "\nThey're dead!"
                     break
         elif check == "donated":
@@ -77,13 +79,15 @@ def valid_location(action, points, x, y, cur_x, cur_y):
     else:
         distance = (2 + points)
 
-    print ("distance=" + str(distance))
-    print (x)
-    print (y)
-    print (cur_x)
-    print (cur_y)
+    #print ("distance=" + str(distance))
+    #print (x)
+    #print (y)
+    #print (cur_x)
+    #print (cur_y)
 
     cost = (abs(cur_x - x) + abs(cur_y - y))
+    if action != "move" and cost < 4:
+        cost = 3
 
     if cost <= distance:
         with open("data/game.json") as f:
@@ -95,12 +99,12 @@ def valid_location(action, points, x, y, cur_x, cur_y):
                     return "blocked", 0
                 elif action == "shoot":
                     if data["players"][player]["hp"] > 0:
-                        return "shot", (cost - 1)
+                        return "shot", (cost - 2)
                     else:
                         return "dead", 0
                 elif action == "donate":
                     if data["players"][player]["hp"] > 0:
-                        return "donated", (cost - 1)
+                        return "donated", (cost - 2)
                     else:
                         return "dead", 0
 
@@ -110,3 +114,23 @@ def valid_location(action, points, x, y, cur_x, cur_y):
             return "missed", 0
     else:
         return "invalid", (distance - (cost - 2))
+
+
+def get_player_info():
+    """Return string with player info."""
+    response = "**REMAINING PLAYERS:**\n"
+
+    with open("data/game.json") as f:
+        data = json.load(f)
+
+    for player in data["players"]:
+        hp = data["players"][player]["hp"]
+        points = data["players"][player]["points"]
+        x = data["players"][player]["x"]
+        y = data["players"][player]["y"]
+        color = data["players"][player]["color"]["name"]
+
+        response += ("{} ({}) | HP: {} | Points {} | Location: ({}, {})"
+                     "\n".format(player, color, hp, points, str(x), str(y)))
+
+    return response

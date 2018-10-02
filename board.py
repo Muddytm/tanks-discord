@@ -17,11 +17,13 @@ temp_off_y = 100
 tile_x = 160
 tile_y = 160
 
+
 def create():
     """Create image of game board."""
     filename = "images/board.png"
     img = Image.new("RGB", ((dim_x * tile_x) + temp_off_x,
-                            (dim_y * tile_x) + temp_off_y), color=(0, 0, 0))
+                            (dim_y * tile_x) + temp_off_y),
+                            color=(0, 0, 0))
     #img = Image.open("images/boardtemplate.png")
     d = ImageDraw.Draw(img)
 
@@ -65,7 +67,7 @@ def create():
         img.paste(hpbar, offset)
 
         pointbar = Image.open("images/points/points{}.png".format(str(points)))
-        offset = ((loc_x * tile_x) + 20 + temp_off_x, (loc_y * tile_y) + 80 + temp_off_y)
+        offset = ((loc_x * tile_x) + 20 + temp_off_x, (loc_y * tile_y) + 84 + temp_off_y)
         img.paste(pointbar, offset)
 
     img.save(filename)
