@@ -1,7 +1,6 @@
 """Stuff for managing the game board."""
 
 from PIL import Image, ImageDraw, ImageFont
-from imgurpython import ImgurClient
 import json
 import urllib.request
 
