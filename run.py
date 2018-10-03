@@ -333,7 +333,8 @@ async def nextturn(ctx, stuff=""):
         data = json.load(f)
 
     for player in data["players"]:
-        data["players"][player]["points"] += 1
+        if data["players"][player]["points"] < 14:
+            data["players"][player]["points"] += 1
 
     vote_counter = {}
     for member in data["jury"]:

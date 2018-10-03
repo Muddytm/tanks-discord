@@ -15,6 +15,9 @@ def action(action, x, y, ctx):
     except Exception:
         return ("Please use correct syntax, with two numbers as the parameter. Example: `!{} 6 9`".format(action)), False
 
+    if x < 0 or y < 0:
+        return ("Nice try."), False
+
     if private:
         with open("data/game.json") as f:
             data = json.load(f)
