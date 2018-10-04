@@ -306,7 +306,7 @@ async def vote(ctx, stuff=""):
 @client.command(pass_context=True)
 async def nextturn(ctx, stuff=""):
     """Activate next turn."""
-    if ctx.message.author.name != "Muddy":
+    if ctx.message.author.name != "Muddy" or ctx.message.author.name != "Tanks Bot":
         return
 
     with open("data/game.json") as f:
