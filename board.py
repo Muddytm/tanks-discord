@@ -71,6 +71,22 @@ def create():
         offset = ((loc_x * tile_x) + 20 + temp_off_x, (loc_y * tile_y) + 84 + temp_off_y)
         img.paste(pointbar, offset)
 
+    with open("data/drops.json") as f:
+        data = json.load(f)
+
+    for type in data:
+        if type == "hp":
+            color = "red"
+        elif type == "points":
+            color = "white"
+        for drop in data[type]:
+            x = data[type][drop]["x"]
+            y = data[type][drop]["y"]
+
+            d.rectangle((((x * tile_x) + 48 + temp_off_x, (y * tile_y) + 48 + temp_off_y),
+                        ((x * tile_x) + (tile_x - 48) + temp_off_x, (y * tile_y) + (tile_y - 48) + temp_off_y)),
+                        fill=color)
+
     img.save(filename)
 
 

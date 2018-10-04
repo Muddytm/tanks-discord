@@ -56,6 +56,21 @@ def action(action, x, y, ctx):
                     else:
                         return "{} is holding the maximum amount of points (14).".format(player), False
                     break
+        elif check == "gotpoints":
+            data["players"][name]["points"] -= cost
+            data["players"][name]["points"] += 3
+            if data["players"][name]["points"] > 14:
+                data["players"][name]["points"] = 14
+            data["players"][name]["x"] = x
+            data["players"][name]["y"] = y
+            response = "You moved to coordinate ({}, {}) and picked up a points drop!".format(str(x), str(y))
+        elif check == "gothp":
+            data["players"][name]["points"] -= cost
+            if data["players"][name]["hp"] < 3:
+                data["players"][name]["hp"] += 1
+            data["players"][name]["x"] = x
+            data["players"][name]["y"] = y
+            response = "You moved to coordinate ({}, {}) and picked up an HP drop!".format(str(x), str(y))
         elif check == "blocked":
             return "There's already a player there.", False
         elif check == "missed":
@@ -107,6 +122,18 @@ def valid_location(action, points, x, y, cur_x, cur_y):
                         return "dead", 0
 
         if action == "move":
+            with open("data/drops.json") as f:
+                drop_data = json.load(f)
+
+            for type in drop_data:
+                for drop in type:
+                    if (drop_data[type][drop]["x"] == x and
+                            drop_data[type][drop]["y"] == y):
+                        del drop_data[type][drop]
+                        with open("data/drops.json", "w") as f:
+                            json.dump(drop_data, f)
+                        return "got{}".format(type), cost
+
             return "valid", cost
         else:
             return "missed", 0
