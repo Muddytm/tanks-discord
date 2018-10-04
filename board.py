@@ -21,6 +21,24 @@ tile_y = 160
 
 def create():
     """Create image of game board."""
+
+    with open("data/game.json") as f:
+        player_list = json.load(f)
+
+    all_players = []
+    for type in player_list:
+        for player in player_list[type]:
+            all_players.append(player)
+
+    player_count = len(all_players)
+
+    if player_count < 5:
+        dim_y = 5
+    elif player_count < 9:
+        dim_y = 8
+    elif player_count < 13:
+        dimy_y = 11
+
     filename = "images/board.png"
     img = Image.new("RGB", ((dim_x * tile_x) + temp_off_x,
                             (dim_y * tile_x) + temp_off_y),
@@ -105,8 +123,8 @@ def create_drop():
         with open("data/drops.json") as f:
             drop_data = json.load(f)
 
-        drop_x = random.randint(0, dim_x)
-        drop_y = random.randint(0, dim_y)
+        drop_x = random.randint(0, dim_x - 1)
+        drop_y = random.randint(0, dim_y - 1)
 
         for player in data["players"]:
             if (drop_x != data["players"][player]["x"] or
