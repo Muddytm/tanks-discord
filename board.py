@@ -1,7 +1,9 @@
 """Stuff for managing the game board."""
 
+import config
 from PIL import Image, ImageDraw, ImageFont
 import json
+import random
 import urllib.request
 
 # Grid length and height
@@ -26,7 +28,7 @@ def create():
     #img = Image.open("images/boardtemplate.png")
     d = ImageDraw.Draw(img)
 
-    fnt = ImageFont.truetype("C:\\Windows\\Fonts\\arial.ttf", 80)
+    fnt = ImageFont.truetype(config.font_loc, 80)
     for x in range(dim_x):
         num_offset = 80
         if x > 9:
@@ -70,6 +72,41 @@ def create():
         img.paste(pointbar, offset)
 
     img.save(filename)
+
+
+def create_drop():
+    """Create a random drop if conditions are met (in other words...RNG)."""
+    drop_chance = random.randint(1, 100)
+
+    # Arbitrary 1/4 chance
+    if drop_chance <= 25:
+        types = ["points", "hp"]
+        drop_type = random.choice(types)
+
+        with open("data/game.json") as f:
+            data = json.load(f)
+
+        with open("data/drops.json") as f:
+            drop_data = json.load(f)
+
+        drop_x = random.randint(0, dim_x)
+        drop_y = random.randint(0, dim_y)
+
+        for player in data["players"]:
+            if (drop_x != data["players"][player]["x"] or
+                    drop_y != data["players"][player]["y"]):
+                for drop in drop_data[drop_type]:
+                    if (drop_x == drop_data[drop_type][drop]["x"] and
+                            drop_y == drop_data[drop_type][drop]["y"]):
+                        return False
+
+                drop_data[drop_type]["{}{}".format(str(drop_x), str(drop_y))] = {"x": drop_x, "y": drop_y}
+                with open("data/drops.json", "w") as f:
+                    json.dump(drop_data, f)
+
+                return True
+
+        return False
 
 
 if __name__ == "__main__":

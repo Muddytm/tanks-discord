@@ -3,3 +3,4 @@ __pycache__/
 data/game.json
 data/registered.json
 images/board.png
+data/drops.json

@@ -3,3 +3,4 @@
 client_id = ""
 client_secret = ""
 app_token = ""
+font_loc = ""

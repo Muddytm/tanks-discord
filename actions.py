@@ -1,6 +1,7 @@
 """Helper functions for action-based stuff."""
 
 import json
+import random
 
 
 def action(action, x, y, ctx):
