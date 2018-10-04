@@ -37,7 +37,9 @@ def create():
     elif player_count < 9:
         dim_y = 8
     elif player_count < 13:
-        dimy_y = 11
+        dim_y = 11
+    else:
+        dim_y = 14
 
     filename = "images/board.png"
     img = Image.new("RGB", ((dim_x * tile_x) + temp_off_x,
