@@ -17,6 +17,7 @@ BOT_PREFIX = "!"
 client = commands.Bot(command_prefix=commands.when_mentioned_or(BOT_PREFIX))
 
 game = False
+next_activate = True
 
 
 if not os.path.isfile("data/drops.json"):
@@ -46,6 +47,7 @@ async def on_ready():
 
     # Run this with run.py nextturn
     if len(sys.argv) > 1 and sys.argv[1] == "nextturn":
+        next_activate = False
         for channel in client.get_all_channels():
             if channel.name == "commands":
                 await client.send_message(channel, "!nextturn")
@@ -306,7 +308,7 @@ async def vote(ctx, stuff=""):
 @client.command(pass_context=True)
 async def nextturn(ctx, stuff=""):
     """Activate next turn."""
-    if ctx.message.author.name != "Muddy" or ctx.message.author.name != "Tanks Bot":
+    if (ctx.message.author.name != "Muddy" and ctx.message.author.name != "Tanks Bot") and not next_activate:
         return
 
     with open("data/game.json") as f:
