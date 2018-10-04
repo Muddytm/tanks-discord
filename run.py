@@ -1,6 +1,7 @@
 import actions
 import asyncio
 import board
+import datetime
 from discord.ext import commands
 import config
 import discord
@@ -43,12 +44,19 @@ async def on_ready():
     print (client.user.id)
     print ("------")
 
+    # Run this with run.py nextturn
+    if len(sys.argv) > 1 and sys.argv[1] == "nextturn":
+        for channel in client.get_all_channels():
+            if channel.name == "commands":
+                await client.send_message(channel, "!nextturn")
+        client.logout()
+
 
 @client.event
 async def on_message(message):
     """Activates on any message sent."""
-    if message.author == client.user:
-        return
+    #if message.author == client.user:
+    #    return
     # This allows us to use other commands as well.
     await client.process_commands(message)
 
