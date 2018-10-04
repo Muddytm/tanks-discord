@@ -49,7 +49,7 @@ async def on_ready():
         for channel in client.get_all_channels():
             if channel.name == "commands":
                 await client.send_message(channel, "!nextturn")
-        client.logout()
+        await client.logout()
 
 
 @client.event
