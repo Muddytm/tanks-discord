@@ -167,8 +167,8 @@ async def generategame(ctx, stuff=""):
         color_list.append(color)
 
     with open("data/drops.json", "w") as outfile:
-        data = {"points": {}, "hp": {}}
-        json.dump(data, outfile)
+        drop_data = {"points": {}, "hp": {}}
+        json.dump(drop_data, outfile)
 
     for role in ctx.message.server.roles:
         for member in ctx.message.server.members:
