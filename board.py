@@ -10,6 +10,8 @@ import urllib.request
 dim_x = 14
 dim_y = 14
 
+got_count = False
+
 # Template offets
 temp_off_x = 120
 temp_off_y = 100
@@ -21,25 +23,30 @@ tile_y = 160
 
 def create():
     """Create image of game board."""
+    global dim_y
+    global got_count
 
-    with open("data/game.json") as f:
-        player_list = json.load(f)
+    if not got_count:
+        with open("data/game.json") as f:
+            player_list = json.load(f)
 
-    all_players = []
-    for type in player_list:
-        for player in player_list[type]:
-            all_players.append(player)
+        all_players = []
+        for type in player_list:
+            for player in player_list[type]:
+                all_players.append(player)
 
-    player_count = len(all_players)
+        player_count = len(all_players)
 
-    if player_count < 5:
-        dim_y = 5
-    elif player_count < 9:
-        dim_y = 8
-    elif player_count < 13:
-        dim_y = 11
-    else:
-        dim_y = 14
+        if player_count < 5:
+            dim_y = 5
+        elif player_count < 9:
+            dim_y = 8
+        elif player_count < 13:
+            dim_y = 11
+        else:
+            dim_y = 14
+
+        got_count = True
 
     filename = "images/board.png"
     img = Image.new("RGB", ((dim_x * tile_x) + temp_off_x,
@@ -115,7 +122,7 @@ def create_drop():
     drop_chance = random.randint(1, 100)
 
     # Arbitrary 1/4 chance
-    if drop_chance <= 25:
+    if drop_chance <= 40:
         types = ["points", "hp"]
         drop_type = random.choice(types)
 
