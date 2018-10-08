@@ -126,7 +126,7 @@ def valid_location(action, points, x, y, cur_x, cur_y):
                 drop_data = json.load(f)
 
             for type in drop_data:
-                for drop in type:
+                for drop in drop_data[type]:
                     if (drop_data[type][drop]["x"] == x and
                             drop_data[type][drop]["y"] == y):
                         del drop_data[type][drop]
