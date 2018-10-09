@@ -3,9 +3,17 @@
 import json
 import random
 
+# Grid length and height
+dim_x = 14
+dim_y = 14
+
+got_count = False
+
 
 def action(action, x, y, ctx):
     """An all-in-one function for actions."""
+    set_dims()
+
     name = ctx.message.author.name
     #private = ctx.message.channel.is_private
     private = True
@@ -159,3 +167,31 @@ def get_player_info():
                      "\n".format(player, color, hp, points, str(x), str(y)))
 
     return response
+
+
+def set_dims():
+    """Set dimension variables."""
+    global dim_y
+    global got_count
+
+    if not got_count:
+        with open("data/game.json") as f:
+            player_list = json.load(f)
+
+        all_players = []
+        for type in player_list:
+            for player in player_list[type]:
+                all_players.append(player)
+
+        player_count = len(all_players)
+
+        if player_count < 5:
+            dim_y = 5
+        elif player_count < 9:
+            dim_y = 8
+        elif player_count < 13:
+            dim_y = 11
+        else:
+            dim_y = 14
+
+        got_count = True

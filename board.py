@@ -26,27 +26,7 @@ def create():
     global dim_y
     global got_count
 
-    if not got_count:
-        with open("data/game.json") as f:
-            player_list = json.load(f)
-
-        all_players = []
-        for type in player_list:
-            for player in player_list[type]:
-                all_players.append(player)
-
-        player_count = len(all_players)
-
-        if player_count < 5:
-            dim_y = 5
-        elif player_count < 9:
-            dim_y = 8
-        elif player_count < 13:
-            dim_y = 11
-        else:
-            dim_y = 14
-
-        got_count = True
+    set_dims()
 
     filename = "images/board.png"
     img = Image.new("RGB", ((dim_x * tile_x) + temp_off_x,
@@ -151,6 +131,33 @@ def create_drop():
 
         return False
 
+
+def set_dims():
+    """Set dimension variables."""
+    global dim_y
+    global got_count
+
+    if not got_count:
+        with open("data/game.json") as f:
+            player_list = json.load(f)
+
+        all_players = []
+        for type in player_list:
+            for player in player_list[type]:
+                all_players.append(player)
+
+        player_count = len(all_players)
+
+        if player_count < 5:
+            dim_y = 5
+        elif player_count < 9:
+            dim_y = 8
+        elif player_count < 13:
+            dim_y = 11
+        else:
+            dim_y = 14
+
+        got_count = True
 
 if __name__ == "__main__":
     create()

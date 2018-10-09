@@ -370,7 +370,7 @@ async def vote(ctx, stuff=""):
 @client.command(pass_context=True)
 async def nextturn(ctx, stuff=""):
     """Activate next turn."""
-    if "muddy" not in ctx.message.author.name.lower() and "tanks" not in ctx.message.author.name.lower():
+    if "muddy" not in ctx.message.author.name.lower():
         return
 
     with open("data/game.json") as f:
@@ -432,6 +432,24 @@ async def nextturn(ctx, stuff=""):
         suffix = "\nA lootbox has dropped on the battlefield!"
 
     await client.send_message(ctx.message.channel, "{}**The next turn has begun, and all living players have received a point.**{}".format(prefix, suffix))
+
+
+@client.command(pass_context=True)
+async def refresh(ctx, stuff=""):
+    """Refresh the board."""
+    if "muddy" not in ctx.message.author.name.lower():
+        return
+
+    board.create()
+    for channel in ctx.message.server.channels:
+        if channel.name == "gameboard":
+            with open("images/board.png", "rb") as f:
+                messages = []
+                async for msg in client.logs_from(channel, limit=10):
+                    messages.append(msg)
+                await client.delete_messages(messages)
+                await client.send_file(channel, f)
+            await client.send_message(channel, actions.get_player_info())
 
 
 @client.command(pass_context=True)
