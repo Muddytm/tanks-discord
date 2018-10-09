@@ -24,7 +24,7 @@ def action(action, x, y, ctx):
     except Exception:
         return ("Please use correct syntax, with two numbers as the parameter. Example: `!{} 6 9`".format(action)), False
 
-    if x < 0 or y < 0:
+    if x < 0 or y < 0 or x >= dim_x or y >= dim_y:
         return ("Nice try."), False
 
     if private:
