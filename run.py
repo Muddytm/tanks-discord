@@ -99,10 +99,12 @@ async def on_ready():
 
                 prefix = ""
                 if jury:
-                    if not victor:
+                    if tie:
                         victor = "Tied vote - no player"
+                    elif not victor:
+                        victor = "There were no votes, so no one"
 
-                    prefix = "{} won the jury vote!\n"
+                    prefix = "{} won the jury vote!\n".format(victor)
 
                 suffix = ""
                 if drop_created:
@@ -422,8 +424,10 @@ async def nextturn(ctx, stuff=""):
 
     prefix = ""
     if jury:
-        if not victor:
+        if tie:
             victor = "Tied vote - no player"
+        elif not victor:
+            victor = "There were no votes, so no one"
 
         prefix = "{} won the jury vote!\n"
 
