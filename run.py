@@ -166,6 +166,10 @@ async def generategame(ctx, stuff=""):
     if ctx.message.author.name != "Muddy":
         return
 
+    dim_x = 14
+    dim_y = 14
+    randlocs = []
+
     data = {"players": {}, "jury": {}}
     pos_x = 2
     pos_y = 2
@@ -197,6 +201,16 @@ async def generategame(ctx, stuff=""):
                                                          "g": g,
                                                          "b": b}
                 color_list.remove(color)
+
+                if stuff == "random":
+                    pos_x = random.randint(0, dim_x - 1)
+                    pos_y = random.rantint(0, dim_y - 1)
+
+                    while "{} {}".format(str(pos_x), str(pos_y)) in randlocs:
+                        pos_x = random.randint(0, dim_x - 1)
+                        pos_y = random.rantint(0, dim_y - 1)
+
+                    randlocs.append("{} {}".format(str(pos_x), str(pos_y)))
 
                 data["players"][member.name]["x"] = pos_x
                 data["players"][member.name]["y"] = pos_y

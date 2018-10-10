@@ -23,10 +23,10 @@ tile_y = 160
 
 def create():
     """Create image of game board."""
-    global dim_y
-    global got_count
+    #global dim_y
+    #global got_count
 
-    set_dims()
+    #set_dims()
 
     filename = "images/board.png"
     img = Image.new("RGB", ((dim_x * tile_x) + temp_off_x,
@@ -99,10 +99,10 @@ def create():
 
 def create_drop():
     """Create a random drop if conditions are met (in other words...RNG)."""
-    global dim_y
-    global got_count
+    #global dim_y
+    #global got_count
 
-    set_dims()
+    #set_dims()
 
     drop_chance = random.randint(1, 100)
 
@@ -163,6 +163,7 @@ def set_dims():
             dim_y = 14
 
         got_count = True
+
 
 if __name__ == "__main__":
     create()
