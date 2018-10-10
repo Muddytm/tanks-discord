@@ -12,7 +12,7 @@ got_count = False
 
 def action(action, x, y, ctx):
     """An all-in-one function for actions."""
-    set_dims()
+    #set_dims()
 
     name = ctx.message.author.name
     #private = ctx.message.channel.is_private
