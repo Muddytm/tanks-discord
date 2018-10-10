@@ -359,7 +359,7 @@ async def vote(ctx, stuff=""):
         return
     else:
         for player in data["players"]:
-            if stuff.lower() == player.lower():
+            if stuff.lower() in player.lower():
                 data["jury"][ctx.message.author.name] = player
                 await client.send_message(ctx.message.channel, "You are now voting for {}.".format(player))
                 with open("data/game.json", "w") as f:
