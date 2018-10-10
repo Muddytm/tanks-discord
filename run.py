@@ -204,11 +204,11 @@ async def generategame(ctx, stuff=""):
 
                 if stuff == "random":
                     pos_x = random.randint(0, dim_x - 1)
-                    pos_y = random.rantint(0, dim_y - 1)
+                    pos_y = random.randint(0, dim_y - 1)
 
                     while "{} {}".format(str(pos_x), str(pos_y)) in randlocs:
                         pos_x = random.randint(0, dim_x - 1)
-                        pos_y = random.rantint(0, dim_y - 1)
+                        pos_y = random.randint(0, dim_y - 1)
 
                     randlocs.append("{} {}".format(str(pos_x), str(pos_y)))
 
