@@ -99,6 +99,11 @@ def create():
 
 def create_drop():
     """Create a random drop if conditions are met (in other words...RNG)."""
+    global dim_y
+    global got_count
+
+    set_dims()
+
     drop_chance = random.randint(1, 100)
 
     # Arbitrary 1/4 chance
