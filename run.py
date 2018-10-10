@@ -61,12 +61,13 @@ async def on_ready():
                 jury = False
                 for member in data["jury"]:
                     jury = True
-                    if data["jury"][member] not in vote_counter:
-                        vote_counter[data["jury"][member]] = 1
-                    else:
-                        vote_counter[data["jury"][member]] += 1
+                    if data["jury"][member]:
+                        if data["jury"][member] not in vote_counter:
+                            vote_counter[data["jury"][member]] = 1
+                        else:
+                            vote_counter[data["jury"][member]] += 1
 
-                    data["jury"][member] = ""
+                        data["jury"][member] = ""
 
                 highest_count = 0
                 victor = ""
